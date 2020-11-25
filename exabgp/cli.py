@@ -1,4 +1,5 @@
 from flask import Flask, request
+from shlex import quote
 import subprocess
 
 """
@@ -28,7 +29,7 @@ def announce_flowspec():
     if not "command" in data:
         return {"error": True, "message": "command not found."}
 
-    cmd = "exabgpcli neighbor {} '{}'".format(data["neighbor"], data["command"])
+    cmd = "exabgpcli neighbor {} '{}'".format(quote(data["neighbor"]), quote(data["command"]))
 
     result = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True)
     if not result:
